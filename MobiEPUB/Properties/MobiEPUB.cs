@@ -17,7 +17,7 @@
 //    Copyright 2012, Matthew Donald
 //------------------------------------------------------------------------------------
 
-namespace MobiEPUB
+namespace MobiEPUB.Properties
 {
     
     
