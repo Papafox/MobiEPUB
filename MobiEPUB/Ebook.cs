@@ -21,12 +21,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace MobiEPUB
 {
     class Ebook
     {
-        protected Metadata meta;
+        protected Metadata  meta;
+        protected Stream    ebookStream;
+
+
         public Ebook()
         {
             meta = new Metadata();
