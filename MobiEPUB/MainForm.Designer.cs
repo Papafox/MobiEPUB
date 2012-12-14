@@ -109,11 +109,13 @@
             this.documentPanel = new System.Windows.Forms.Panel();
             this.buildPanel = new System.Windows.Forms.Panel();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.docControlPanel = new System.Windows.Forms.Panel();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.projectPanel.SuspendLayout();
             this.pubControlPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.documentPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -627,9 +629,9 @@
             this.projectPanel.BackColor = System.Drawing.SystemColors.Control;
             this.projectPanel.Controls.Add(this.pubControlPanel);
             this.projectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectPanel.Location = new System.Drawing.Point(0, 59);
+            this.projectPanel.Location = new System.Drawing.Point(0, 0);
             this.projectPanel.Name = "projectPanel";
-            this.projectPanel.Size = new System.Drawing.Size(735, 344);
+            this.projectPanel.Size = new System.Drawing.Size(735, 403);
             this.projectPanel.TabIndex = 2;
             this.projectPanel.SizeChanged += new System.EventHandler(this.projectPanel_SizeChanged);
             // 
@@ -773,12 +775,14 @@
             // 
             // documentPanel
             // 
-            this.documentPanel.BackColor = System.Drawing.Color.Gold;
+            this.documentPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.documentPanel.Controls.Add(this.docControlPanel);
             this.documentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.documentPanel.Location = new System.Drawing.Point(0, 59);
             this.documentPanel.Name = "documentPanel";
             this.documentPanel.Size = new System.Drawing.Size(735, 344);
             this.documentPanel.TabIndex = 0;
+            this.documentPanel.SizeChanged += new System.EventHandler(this.projectPanel_SizeChanged);
             // 
             // buildPanel
             // 
@@ -789,16 +793,23 @@
             this.buildPanel.Size = new System.Drawing.Size(735, 344);
             this.buildPanel.TabIndex = 0;
             // 
+            // docControlPanel
+            // 
+            this.docControlPanel.Location = new System.Drawing.Point(112, 0);
+            this.docControlPanel.Name = "docControlPanel";
+            this.docControlPanel.Size = new System.Drawing.Size(560, 344);
+            this.docControlPanel.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 403);
-            this.Controls.Add(this.projectPanel);
             this.Controls.Add(this.documentPanel);
             this.Controls.Add(this.buildPanel);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.projectPanel);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "MobiEPUB";
@@ -813,6 +824,7 @@
             this.pubControlPanel.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.documentPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -901,6 +913,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox pubFilenameText;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel docControlPanel;
     }
 }
 

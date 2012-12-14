@@ -59,14 +59,14 @@
 //    	mimetype
 //    	META-INF/
 //    		container.xml
-//      		[manifest.xml]
-//      		[metadata.xml]
-//      		[signatures.xml]
-//      		[encryption.xml]
-//      		[rights.xml]
+//      	[manifest.xml]
+//      	[metadata.xml]
+//      	[signatures.xml]
+//      	[encryption.xml]
+//      	[rights.xml]
 //    	OEBPS/
-//      		Great Expectations.opf
-//      		cover.html
+//      	Great Expectations.opf
+//      	cover.html
 //    		chapters/
 //         		chapter01.html
 //         		chapter02.html
@@ -321,13 +321,127 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Xml;
+using Ionic.Zip;
 
 namespace MobiEPUB
 {
     class EPUBebook : Ebook
     {
-        public EPUBebook() : base()
+        private ZipFile epub;
+        private String opfFilename;
+        private XmlNamespaceManager xmlnsManager;
+
+        public EPUBebook(String fn)
+            : base()
         {
+            _filename = fn;
+            if (!ZipFile.IsZipFile(_filename))
+                throw new MobiEPUBexception("invalid EPUB file: " + _filename + " (reason 01)");
+            epub = new ZipFile(_filename);
+            setupNameSpaces();
+        }
+
+        public EPUBebook()
+            : base()
+        {
+            setupNameSpaces();
+        }
+
+        public override void Save()
+        {
+            base.Save();
+            opfFilename = "/OEBPS/" + OPF_filename(_meta.Title);
+            ZipFile tempZip = new ZipFile(_filename);
+            tempZip.AddDirectory("/META-INF");
+            tempZip.AddDirectory("/OEBPS");
+            tempZip.AddEntry("/mimetype", "application/epub+zip");
+            tempZip.AddEntry("/META-INF/container.xml", ContainerXml());
+            tempZip.AddEntry(opfFilename, OPF());
+            tempZip.Save(_filename);
+        }
+
+        private void setupNameSpaces()
+        {
+            xmlnsManager = new XmlNamespaceManager();
+            xmlnsManager.AddNamespace("def", "urn:oasis:names:tc:opendocument:xmlns:container");
+        }
+
+        private String ContainerXml()
+        {
+            // Creat an empty document and add an XMl declaration
+            XmlDocument result = new XmlDocument(xmlnsManager.NameTable);
+            XmlDeclaration dec = result.CreateXmlDeclaration("1.0", null, null);
+            result.AppendChild(dec);
+
+            // Create the root element "rootfiles"
+            XmlElement rootfiles = result.CreateElement("rootfiles");
+            result.AppendChild(rootfiles);
+
+            // Create the inner element "rootfile" and add two attributes "full-path" and "media-type"
+            XmlElement rootfile = result.CreateElement("rootfile");
+            XmlAttribute opf_path = BuildAttribute(result, "full-path", opfFilename);
+            XmlAttribute media_type = BuildAttribute(result, "media-type", "application/oebps-package+xml");
+            rootfile.AppendChild(opf_path);
+            rootfile.AppendChild(media_type);
+
+            rootfiles.AppendChild(rootfile);
+            return result.OuterXml;
+        }
+
+        private String OPF()
+        {
+            // Create an empty OPF document with a namespace and add an XML declaration
+            XmlNamespaceManager nsManager = new XmlNamespaceManager(new NameTable());
+            nsManager.AddNamespace("opf", "http://www.idpf.org/2007/opf");
+            nsManager.AddNamespace("dc","http://purl.org/dc/elements/1.1/");
+            XmlDocument result = new XmlDocument(nsManager.NameTable);
+            XmlDeclaration dec = result.CreateXmlDeclaration("1.0", null, null);
+            result.AppendChild(dec);
+
+            // Create document root "package" and add namespace
+            XmlElement package = result.CreateElement("package", "http://www.idpf.org/2007/opf");
+            XmlAttribute unique_identifier = BuildAttribute(result, "unique-identifier", "BookId");
+            XmlAttribute version = BuildAttribute(result, "version", "2.0");
+            package.AppendChild(unique_identifier);
+            package.AppendChild(version);
+
+            // Create the Dublin Core metadata
+            XmlElement metadata = result.CreateElement("dc", "metadata", "http://purl.org/dc/elements/1.1/");
+            result.AppendChild(metadata);
+
+            // Create the Manifest
+            XmlElement manifest = result.CreateElement("manifest");
+            result.AppendChild(manifest);
+
+            // Create the Spine
+            XmlElement spine = result.CreateElement("spine");
+            result.AppendChild(spine);
+
+            // Create the Guide
+            XmlElement guide = result.CreateElement("guide");
+            result.AppendChild(guide);
+            
+            // Return the XML as text
+            return result.OuterXml;
+        }
+
+        private String OPF_filename(String title)
+        {
+            String result = title;
+            result.Replace(' ', '_');
+
+            return result;
+        }
+
+        private XmlAttribute BuildAttribute(XmlDocument doc, String name, String text)
+        {
+            XmlAttribute result = doc.CreateAttribute(name);
+            XmlText attr_text = doc.CreateTextNode(text);
+            result.AppendChild(attr_text);
+
+            return result;
         }
     }
 }

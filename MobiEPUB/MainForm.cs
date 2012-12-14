@@ -84,11 +84,23 @@ namespace MobiEPUB
             pubLanguageCombo.SelectedIndex = pubLanguageCombo.Items.IndexOf(deflang);
         }
 
+        private void documentPanel_Load(object sender, EventArgs e)
+        {
+            documentPanel_SizeChanged(sender, e);
+        }
+
         private void projectPanel_SizeChanged(object sender, EventArgs e)
         {
             pubControlPanel.Top = 0;
             pubControlPanel.Left = (projectPanel.Width - pubControlPanel.Width) / 2;
             pubControlPanel.Height = projectPanel.Height;
+        }
+
+        private void documentPanel_SizeChanged(object sender, EventArgs e)
+        {
+            docControlPanel.Top = 0;
+            docControlPanel.Left = (documentPanel.Width - docControlPanel.Width) / 2;
+            docControlPanel.Height = documentPanel.Height;
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

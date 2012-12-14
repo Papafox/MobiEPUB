@@ -25,15 +25,30 @@ using System.IO;
 
 namespace MobiEPUB
 {
-    class Ebook
+    abstract class Ebook
     {
-        protected Metadata  meta;
-        protected Stream    ebookStream;
+        protected Metadata _meta;
+        protected String _filename;
+        protected Stream _stream;
 
 
         public Ebook()
         {
-            meta = new Metadata();
+            _meta = new Metadata();
+        }
+
+        public String Filename { get { return _filename; } }
+
+        public void Save()
+        {
+            // Check that a filename has been specified
+            if (_filename == null || _filename.Length == 0)
+                throw new MobiEPUBexception("Save failed: no filename specifed");
+
+            // Check that the metadata is valid:
+            // 1. Has a title been specifed?
+            if (_meta.Title == null || _meta.Title.Length == 0)
+                throw new MobiEPUBexception("Save failed: no title specified");
         }
     }
 }

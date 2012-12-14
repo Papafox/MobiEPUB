@@ -32,9 +32,9 @@ namespace MobiEPUB
         {
         }
 
-        public String Title { get; set; }
-        public String Author { get; set; }
-        public String Language { get; set; }
-        public String Subject { get; set; }
+        public String Title { get { return m_Title; } set { m_Title = value; } }
+        public String Author { get { return m_Author; } set { m_Author = value; } }
+        public String Language { get { return m_Language; } set { m_Language = value; } }
+        public String Subject { get { return m_Subject; } set { m_Subject = value; } }
     }
 }

@@ -536,13 +536,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace MobiEPUB
 {
     class PRCebook : Ebook
     {
-        public PRCebook() : base()
+        public PRCebook()
+            : base()
         {
+        }
+        public PRCebook(String fn)
+            : base()
+        {
+            _filename = fn;
         }
     }
 }

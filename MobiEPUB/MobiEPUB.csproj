@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>zip-v1.9\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +65,7 @@
     </Compile>
     <Compile Include="Metadata.cs" />
     <Compile Include="MobiEPUB.cs" />
+    <Compile Include="MobiEPUBexception.cs" />
     <Compile Include="PRCebook.cs" />
     <Compile Include="Properties\MobiEPUB.cs" />
     <Compile Include="Properties\MobiEPUB.Designer.cs">
