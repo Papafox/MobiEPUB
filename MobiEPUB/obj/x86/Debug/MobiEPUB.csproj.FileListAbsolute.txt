@@ -22,3 +22,6 @@ C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86
 C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.SettingsForm.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.dll
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.pdb
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.xml

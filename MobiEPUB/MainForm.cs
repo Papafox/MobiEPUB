@@ -25,12 +25,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MobiEPUB
 {
     public partial class MainForm : Form
     {
         private Settings m_Settings;
+        private Ebook ebook;
 
         public MainForm()
         {
@@ -52,6 +54,8 @@ namespace MobiEPUB
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.SuspendLayout();
+
             // Restore the main form to the last location
             this.Size = m_Settings.Size;
             this.Location = m_Settings.Location;
@@ -61,11 +65,34 @@ namespace MobiEPUB
 
             // Initialize the various panels
             projectPanel_Load(sender, e);
+            //documentPanel_Load(sender, e);
 
             // Initially show the project view.  Hide the others.
-            documentPanel.Visible = false;
-            buildPanel.Visible = false;
-            projectPanel.Visible = true;
+            SelectPanel(projectPanel);
+
+            this.ResumeLayout();
+        }
+
+        private void SelectPanel(Panel p)
+        {
+            if (p == buildPanel)
+            {
+                documentPanel.Visible = false;
+                buildPanel.Visible = true;
+                projectPanel.Visible = false;
+            }
+            else if (p == documentPanel)
+            {
+                documentPanel.Visible = true;
+                buildPanel.Visible = false;
+                projectPanel.Visible = false;
+            }
+            else if (p == projectPanel)
+            {
+                documentPanel.Visible = false;
+                buildPanel.Visible = false;
+                projectPanel.Visible = true;
+            }
         }
 
         private void projectPanel_Load(object sender, EventArgs e)
@@ -86,7 +113,45 @@ namespace MobiEPUB
 
         private void documentPanel_Load(object sender, EventArgs e)
         {
+            int col0Width =  (int)docFileTablePanel.ColumnStyles[0].Width;
+            int col2Width =  (int)docFileTablePanel.ColumnStyles[0].Width;
+            int textWidth = docFileTablePanel.Width - (col0Width + col2Width);
+            docFileTablePanel.RowCount = 0;
+
+            this.SuspendLayout();
             documentPanel_SizeChanged(sender, e);
+            docFileTablePanel.RowCount = 0;
+            foreach (DocumentFile doc in ebook.Documents)
+            {
+                int row = AddTableRow();
+
+                PictureBox pic = new PictureBox();
+                pic.Image = Properties.Resources.ebook_icon;
+                pic.Anchor = AnchorStyles.Left;
+                docFileTablePanel.Controls.Add(pic, 0, row);
+
+                TextBox text = new TextBox();
+                text.Width = textWidth;
+                text.Text = doc.Filename;
+                text.Anchor = AnchorStyles.Left;
+                docFileTablePanel.Controls.Add(text, 1, row);
+
+                Label l = new Label();
+                l.Text = doc.ItemID;
+                l.Anchor = AnchorStyles.Left;
+                l.TextAlign = ContentAlignment.MiddleLeft;
+                docFileTablePanel.Controls.Add(l, 2, row);
+
+            }
+            this.ResumeLayout();
+        }
+
+        private int AddTableRow()
+        {
+            int result = docFileTablePanel.RowCount++;
+            RowStyle style = new RowStyle(SizeType.Absolute, 20.0F);
+            docFileTablePanel.RowStyles.Add(style);
+            return result;
         }
 
         private void projectPanel_SizeChanged(object sender, EventArgs e)
@@ -142,6 +207,26 @@ namespace MobiEPUB
             ok &= pubEncodingCombo.Text.Length > 0;
 
             pubCreateButton.Enabled = ok;
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            openFileDialog.InitialDirectory = m_Settings.DefaultDir;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                String filename = openFileDialog.FileName;
+                String ext = Path.GetExtension(filename).ToLower();
+                if (ext == ".epub")
+                {
+                    ebook = new EPUBebook(filename);
+                }
+                if (ext == ".prc")
+                {
+                    ebook = new PRCebook(filename);
+                }
+                SelectPanel(documentPanel);
+                documentPanel_Load(sender, e);
+            }
         }
 
     }

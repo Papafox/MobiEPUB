@@ -329,8 +329,8 @@ namespace MobiEPUB
 {
     class EPUBebook : Ebook
     {
-        private ZipFile epub;
-        private String opfFilename;
+        private String opfFilename;                 // zip path of the OPF entry
+        private String uniqueId;                    // UniqueID attribute of the OPF
         private XmlNamespaceManager xmlnsManager;
 
         public EPUBebook(String fn)
@@ -339,8 +339,8 @@ namespace MobiEPUB
             _filename = fn;
             if (!ZipFile.IsZipFile(_filename))
                 throw new MobiEPUBexception("invalid EPUB file: " + _filename + " (reason 01)");
-            epub = new ZipFile(_filename);
             setupNameSpaces();
+            Open(_filename);
         }
 
         public EPUBebook()
@@ -349,6 +349,216 @@ namespace MobiEPUB
             setupNameSpaces();
         }
 
+        private void setupNameSpaces()
+        {
+            xmlnsManager = new XmlNamespaceManager(new NameTable());
+            xmlnsManager.AddNamespace("def", "urn:oasis:names:tc:opendocument:xmlns:container");
+        }
+
+        //=================================================================================================================================
+        //      L o a d   a n   E P U B   f i l e
+        //=================================================================================================================================
+        public override void Open(String fn)
+        {
+            base.Open(fn);
+            if (!ZipFile.IsZipFile(fn))
+                throw new MobiEPUBexception("File '" + fn + "' is not a valid EPUB file (reason 01)");
+            ZipFile epub = ZipFile.Read(fn);
+            LoadEPUB(epub);
+        }
+
+        public override void Open(Stream str)
+        {
+            base.Open(str);
+            ZipFile epub = ZipFile.Read(str);
+            LoadEPUB(epub);
+        }
+
+        private void LoadEPUB(ZipFile zip)
+        {
+            if (!IsValidEpub(zip))
+                throw new MobiEPUBexception("File '" + zip.Name + "' is not a valid EPUB file (reason 02)");
+            XmlDocument container = GetContainer(zip);
+            opfFilename = GetOPFfilename(container);
+            XmlDocument opf = GetOPF(zip, opfFilename);
+            String opfVersion = GetOPFversion(opf);
+            if (opfVersion != "2.0")
+                throw new Exception("Error: OPF unsupported version. Found:" + opfVersion + " expected:2.0");
+            LoadOPF(opf);
+        }
+
+        // Validate that the EPUB contains a valid mimetype "application/epub+zip"
+        private bool IsValidEpub(ZipFile epub)
+        {
+            ZipEntry ze = epub["mimetype"];
+            int len = (int)ze.UncompressedSize + 4;
+            byte[] buff = new byte[len];
+            MemoryStream st = new MemoryStream(buff, true);
+            ze.Extract(st);
+            String mimetype = Encoding.UTF8.GetString(buff, 0, (int)ze.UncompressedSize);
+            bool result = (mimetype == "application/epub+zip");
+            st.Close();
+            return result;
+        }
+
+        // Extract the container.xml document
+        private XmlDocument GetContainer(ZipFile zip)
+        {
+            XmlDocument result = new XmlDocument();
+            ZipEntry ze = zip["META-INF/container.xml"];
+            int len = (int)ze.UncompressedSize;
+            byte[] buff = new byte[len];
+            MemoryStream st = new MemoryStream(buff, true);
+            ze.Extract(st);
+            st.Position = 0;
+            st.Seek(0, SeekOrigin.Begin);
+            result.Load(st);
+            st.Close();
+            return result;
+        }
+
+        // Extract the OPF document file name from the container.xml
+        //   <?xml version="1.0" encoding="utf-8" standalone="no" ?>
+        //   <container version="1.0">
+        //      <rootfiles>
+        //         <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml">
+        //      </rootfiles>
+        //   </container>
+        private String GetOPFfilename(XmlDocument container)
+        {
+            XmlNode node;
+
+            // create ns manager
+            XmlNamespaceManager xmlnsManager = new XmlNamespaceManager(container.NameTable);
+            xmlnsManager.AddNamespace("def", "urn:oasis:names:tc:opendocument:xmlns:container");
+
+            // Validate version 1.0
+            node = container.SelectSingleNode("/def:container", xmlnsManager);
+            XmlAttribute version = node.Attributes["version"];
+            if (version.Value != "1.0")
+                throw new Exception("Error: container.xml unsupported version. Found:" + version.Value + " expected:1.0");
+
+            // Extract the OPF file path.  Check that it has a valid mimetype
+            node = container.SelectSingleNode("/def:container/def:rootfiles/def:rootfile", xmlnsManager);
+            XmlAttribute path = node.Attributes["full-path"];
+            XmlAttribute type = node.Attributes["media-type"];
+            if ((type.Value != null) && (type.Value != "application/oebps-package+xml"))
+                throw new Exception("Error: container.xml unsupported media-type. Found:'" + type.Value + "' expected:'application/oebps-package+xml'");
+
+
+            // Check a path exists
+            if (path == null)
+                throw new Exception("Error: container.xml does not contain the path of the OPF");
+
+            return path.Value;
+        }
+
+        // Extract the OPF document
+        private XmlDocument GetOPF(ZipFile zip, String opfFile)
+        {
+            XmlDocument result = new XmlDocument();
+            ZipEntry ze = zip[opfFile];
+            int len = (int)ze.UncompressedSize;
+            byte[] buff = new byte[len];
+            MemoryStream st = new MemoryStream(buff, true);
+            ze.Extract(st);
+            st.Position = 0;
+            st.Seek(0, SeekOrigin.Begin);
+            result.Load(st);
+            st.Close();
+
+            return result;
+        }
+
+        // Validate the OPF
+        // Check that version is 2.0
+        // Check UniqueID exists
+        private String GetOPFversion(XmlDocument opf)
+        {
+            XmlNode node;
+
+            // create ns manager
+            XmlNamespaceManager opfnsManager = new XmlNamespaceManager(opf.NameTable);
+            opfnsManager.AddNamespace("def", "http://www.idpf.org/2007/opf");
+            opfnsManager.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+
+            // Validate version 2.0
+            node = opf.SelectSingleNode("/def:package", opfnsManager);
+            XmlAttribute version = node.Attributes["version"];
+            return version.Value;
+        }
+
+        // Parse the OPF into various parts
+        //   <?xml version="1.0" ?>
+        //   <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
+        //       <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+        //       ...
+        //       </metadata>
+        //       <manifest>
+        //           <item href="9781118180501f01.xhtml" id="f01" media-type="application/xhtml+xml" />
+        //           <item href="9781118180501toc.xhtml" id="toc" media-type="application/xhtml+xml" />
+        //           <item href="images/c07uf002.jpg" id="c07uf002" media-type="image/jpeg" />
+        //           ...
+        //       </manifest>
+        //       <spine toc="ncx">
+        //           <itemref idref="xcover" linear="yes" />
+        //           ...
+        //       </spine>
+        //       <guide>
+        //          <reference href="9781118180501cover.xhtml" title="Cover" type="cover" /> 
+        //          ...
+        //       </guide>
+        //   </package>
+        private void LoadOPF(XmlDocument opf)
+        {
+            // Load the metadata
+
+            // Load the manifest
+            LoadManifest(opf);
+
+            // Load the spine
+
+            // Load the guide
+        }
+
+
+        // Load the manifest
+        //       <manifest>
+        //           <item href="9781118180501f01.xhtml" id="f01" media-type="application/xhtml+xml" />
+        //           <item href="9781118180501toc.xhtml" id="toc" media-type="application/xhtml+xml" />
+        //           <item href="images/c07uf002.jpg" id="c07uf002" media-type="image/jpeg" />
+        //           ...
+        //       </manifest>
+        private void LoadManifest(XmlDocument opf)
+        {
+            XmlNamespaceManager opfnsManager = new XmlNamespaceManager(opf.NameTable);
+            opfnsManager.AddNamespace("def", "http://www.idpf.org/2007/opf");
+            opfnsManager.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+
+            XmlNodeList items = opf.SelectNodes("/def:package/def:manifest/def:item", opfnsManager);
+            foreach (XmlNode item in items)
+            {
+                XmlAttribute href = item.Attributes["href"];
+                XmlAttribute id = item.Attributes["id"];
+                _meta.AddFile(id.Value, href.Value);
+            }
+        }
+
+
+        //=================================================================================================================================
+        //      B u i l d    a n    E P U B   f i l e
+        //
+        //      1.  Create the EPUB zip file
+        //      2.  Add the internal directories (META-INF and OEBPS)
+        //      3.  Create the mimetype file
+        //      4.  Create the container.xml control file
+        //      5.  Add all the documents to the OEBPS directory
+        //      6.  Create the OPF control file
+        //=================================================================================================================================
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        //   Create the EPUB zip file and load it's various entries
+        //-------------------------------------------------------------------------------------------------------------------------
         public override void Save()
         {
             base.Save();
@@ -359,20 +569,31 @@ namespace MobiEPUB
             tempZip.AddEntry("/mimetype", "application/epub+zip");
             tempZip.AddEntry("/META-INF/container.xml", ContainerXml());
             tempZip.AddEntry(opfFilename, OPF());
+
+            if (File.Exists(_filename))
+            {
+                if (File.Exists(_filename + ".old"))
+                    File.Delete(_filename + ".old");
+                File.Move(_filename, _filename + ".old");
+            }
             tempZip.Save(_filename);
         }
 
-        private void setupNameSpaces()
-        {
-            xmlnsManager = new XmlNamespaceManager();
-            xmlnsManager.AddNamespace("def", "urn:oasis:names:tc:opendocument:xmlns:container");
-        }
-
+        //-------------------------------------------------------------------------------------------------------------------------
+        //   Create the container.xml control file
+        //
+        //   <?xml version="1.0" encoding="utf-8" standalone="no" ?>
+        //   <container version="1.0">
+        //      <rootfiles>
+        //         <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml">
+        //      </rootfiles>
+        //   </container>
+        //-------------------------------------------------------------------------------------------------------------------------
         private String ContainerXml()
         {
             // Creat an empty document and add an XMl declaration
             XmlDocument result = new XmlDocument(xmlnsManager.NameTable);
-            XmlDeclaration dec = result.CreateXmlDeclaration("1.0", null, null);
+            XmlDeclaration dec = result.CreateXmlDeclaration("1.0", "utf-8", "no");
             result.AppendChild(dec);
 
             // Create the root element "rootfiles"
@@ -390,12 +611,36 @@ namespace MobiEPUB
             return result.OuterXml;
         }
 
+        //-------------------------------------------------------------------------------------------------------------------------
+        //   Create the OPF control file
+        //
+        //   <?xml version="1.0" ?>
+        //   <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="2.0">
+        //       <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+        //       ...
+        //       </metadata>
+        //       <manifest>
+        //           <item href="9781118180501f01.xhtml" id="f01" media-type="application/xhtml+xml" />
+        //           <item href="9781118180501toc.xhtml" id="toc" media-type="application/xhtml+xml" />
+        //           <item href="images/c07uf002.jpg" id="c07uf002" media-type="image/jpeg" />
+        //           ...
+        //       </manifest>
+        //       <spine toc="ncx">
+        //           <itemref idref="xcover" linear="yes" />
+        //           ...
+        //       </spine>
+        //       <guide>
+        //          <reference href="9781118180501cover.xhtml" title="Cover" type="cover" /> 
+        //          ...
+        //       </guide>
+        //   </package>
+        //-------------------------------------------------------------------------------------------------------------------------
         private String OPF()
         {
             // Create an empty OPF document with a namespace and add an XML declaration
             XmlNamespaceManager nsManager = new XmlNamespaceManager(new NameTable());
             nsManager.AddNamespace("opf", "http://www.idpf.org/2007/opf");
-            nsManager.AddNamespace("dc","http://purl.org/dc/elements/1.1/");
+            nsManager.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
             XmlDocument result = new XmlDocument(nsManager.NameTable);
             XmlDeclaration dec = result.CreateXmlDeclaration("1.0", null, null);
             result.AppendChild(dec);
@@ -412,21 +657,22 @@ namespace MobiEPUB
             result.AppendChild(metadata);
 
             // Create the Manifest
-            XmlElement manifest = result.CreateElement("manifest");
+            XmlElement manifest = BuildManifest(result);
             result.AppendChild(manifest);
 
             // Create the Spine
-            XmlElement spine = result.CreateElement("spine");
+            XmlElement spine = BuildSpine(result);
             result.AppendChild(spine);
 
             // Create the Guide
-            XmlElement guide = result.CreateElement("guide");
+            XmlElement guide = BuildGuide(result);
             result.AppendChild(guide);
-            
+
             // Return the XML as text
             return result.OuterXml;
         }
 
+        // Generate a filename based on the title with any spaces replaced by '_'
         private String OPF_filename(String title)
         {
             String result = title;
@@ -435,6 +681,59 @@ namespace MobiEPUB
             return result;
         }
 
+        // Create the metadata
+        //       <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+        //       ...
+        //       </metadata>
+        private XmlElement BuildMetadata(XmlDocument doc)
+        {
+            XmlElement result = doc.CreateElement("dc", "metadata", "http://purl.org/dc/elements/1.1/");
+
+            return result;
+        }
+
+
+        // Create the manifest structure
+        //       <manifest>
+        //           <item href="9781118180501f01.xhtml" id="f01" media-type="application/xhtml+xml" />
+        //           <item href="9781118180501toc.xhtml" id="toc" media-type="application/xhtml+xml" />
+        //           <item href="images/c07uf002.jpg" id="c07uf002" media-type="image/jpeg" />
+        //           ...
+        //       </manifest>
+        private XmlElement BuildManifest(XmlDocument doc)
+        {
+            XmlElement result = doc.CreateElement("manifest");
+
+            return result;
+        }
+
+        // Create the spine structure
+        //       <spine toc="ncx">
+        //           <itemref idref="xcover" linear="yes" />
+        //           ...
+        //       </spine>
+        private XmlElement BuildSpine(XmlDocument doc)
+        {
+            XmlElement result = doc.CreateElement("spine");
+            XmlAttribute toc = BuildAttribute(doc, "toc", "ncx");
+            result.AppendChild(toc);
+
+            return result;
+        }
+
+        // Create the guide structure
+        //       <guide>
+        //          <reference href="9781118180501cover.xhtml" title="Cover" type="cover" /> 
+        //          ...
+        //       </guide>
+        private XmlElement BuildGuide(XmlDocument doc)
+        {
+            XmlElement result = doc.CreateElement("guide");
+
+            return result;
+        }
+        
+        // Create an attribute given a document + name + value
         private XmlAttribute BuildAttribute(XmlDocument doc, String name, String text)
         {
             XmlAttribute result = doc.CreateAttribute(name);

@@ -22,3 +22,6 @@ C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86
 C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.exe
 C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.pdb
 C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.SettingsForm.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Release\Ionic.Zip.dll
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Release\Ionic.Zip.pdb
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Release\Ionic.Zip.xml

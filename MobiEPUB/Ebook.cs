@@ -29,7 +29,6 @@ namespace MobiEPUB
     {
         protected Metadata _meta;
         protected String _filename;
-        protected Stream _stream;
 
 
         public Ebook()
@@ -39,7 +38,7 @@ namespace MobiEPUB
 
         public String Filename { get { return _filename; } }
 
-        public void Save()
+        public virtual void Save()
         {
             // Check that a filename has been specified
             if (_filename == null || _filename.Length == 0)
@@ -50,5 +49,15 @@ namespace MobiEPUB
             if (_meta.Title == null || _meta.Title.Length == 0)
                 throw new MobiEPUBexception("Save failed: no title specified");
         }
+
+        public virtual void Open(String fn)
+        {
+        }
+
+        public virtual void Open(Stream str)
+        {
+        }
+
+        public DocumentFile[] Documents { get { return _meta.Files; } }
     }
 }

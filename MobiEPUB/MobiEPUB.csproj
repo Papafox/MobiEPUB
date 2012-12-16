@@ -143,6 +143,18 @@
   <ItemGroup>
     <None Include="Images\View Thumbs-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Add-file-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Arrow-down-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Arrow-up-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Remove-file-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
