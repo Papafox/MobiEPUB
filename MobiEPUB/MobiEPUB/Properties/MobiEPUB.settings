@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MobiEPUB.Properties" GeneratedClassName="MobiEPUB">
+  <Profiles />
+  <Settings>
+    <Setting Name="EyeCatcher" GenerateDefaultValueInCode="false" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MobiEPUB</Value>
+    </Setting>
+    <Setting Name="DefaultDir" GenerateDefaultValueInCode="false" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%DEFAULTUSERPROFILE%\My Documents</Value>
+    </Setting>
+    <Setting Name="DefaultLang" GenerateDefaultValueInCode="false" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English (Australia)</Value>
+    </Setting>
+    <Setting Name="DefaultEncoding" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UTF-8</Value>
+    </Setting>
+    <Setting Name="Location" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="Size" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">751, 441</Value>
+    </Setting>
+    <Setting Name="AvailableEncodings" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Windows-1252,UTF-8</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -54,8 +54,6 @@ namespace MobiEPUB
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-
             // Restore the main form to the last location
             this.Size = m_Settings.Size;
             this.Location = m_Settings.Location;
@@ -65,12 +63,9 @@ namespace MobiEPUB
 
             // Initialize the various panels
             projectPanel_Load(sender, e);
-            //documentPanel_Load(sender, e);
 
             // Initially show the project view.  Hide the others.
             SelectPanel(projectPanel);
-
-            this.ResumeLayout();
         }
 
         private void SelectPanel(Panel p)
@@ -113,12 +108,12 @@ namespace MobiEPUB
 
         private void documentPanel_Load(object sender, EventArgs e)
         {
-            int col0Width =  (int)docFileTablePanel.ColumnStyles[0].Width;
-            int col2Width =  (int)docFileTablePanel.ColumnStyles[0].Width;
+            int col0Width = (int)docFileTablePanel.ColumnStyles[0].Width;
+            int col2Width = (int)docFileTablePanel.ColumnStyles[0].Width;
             int textWidth = docFileTablePanel.Width - (col0Width + col2Width);
             docFileTablePanel.RowCount = 0;
 
-            this.SuspendLayout();
+            docFileTablePanel.SuspendLayout();
             documentPanel_SizeChanged(sender, e);
             docFileTablePanel.RowCount = 0;
             foreach (DocumentFile doc in ebook.Documents)
@@ -130,20 +125,20 @@ namespace MobiEPUB
                 pic.Anchor = AnchorStyles.Left;
                 docFileTablePanel.Controls.Add(pic, 0, row);
 
-                TextBox text = new TextBox();
-                text.Width = textWidth;
-                text.Text = doc.Filename;
-                text.Anchor = AnchorStyles.Left;
-                docFileTablePanel.Controls.Add(text, 1, row);
-
                 Label l = new Label();
                 l.Text = doc.ItemID;
                 l.Anchor = AnchorStyles.Left;
                 l.TextAlign = ContentAlignment.MiddleLeft;
-                docFileTablePanel.Controls.Add(l, 2, row);
+                docFileTablePanel.Controls.Add(l, 1, row);
 
+                TextBox text = new TextBox();
+                text.Width = textWidth;
+                text.Text = doc.Filename;
+                text.Anchor = AnchorStyles.Left;
+                docFileTablePanel.Controls.Add(text, 2, row);
             }
-            this.ResumeLayout();
+            docFileTablePanel.ResumeLayout();
+            docFileTablePanel.PerformLayout();
         }
 
         private int AddTableRow()
@@ -228,6 +223,5 @@ namespace MobiEPUB
                 documentPanel_Load(sender, e);
             }
         }
-
     }
 }

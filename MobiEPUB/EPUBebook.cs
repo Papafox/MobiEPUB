@@ -732,7 +732,7 @@ namespace MobiEPUB
 
             return result;
         }
-        
+
         // Create an attribute given a document + name + value
         private XmlAttribute BuildAttribute(XmlDocument doc, String name, String text)
         {

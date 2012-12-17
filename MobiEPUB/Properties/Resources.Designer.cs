@@ -60,27 +60,6 @@ namespace MobiEPUB.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Add_file_icon {
-            get {
-                object obj = ResourceManager.GetObject("Add_file_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Arrow_down_icon {
-            get {
-                object obj = ResourceManager.GetObject("Arrow_down_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Arrow_up_icon {
-            get {
-                object obj = ResourceManager.GetObject("Arrow_up_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap Book_icon {
             get {
                 object obj = ResourceManager.GetObject("Book_icon", resourceCulture);
@@ -133,13 +112,6 @@ namespace MobiEPUB.Properties {
         internal static System.Drawing.Bitmap Paste_icon {
             get {
                 object obj = ResourceManager.GetObject("Paste_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Remove_file_icon {
-            get {
-                object obj = ResourceManager.GetObject("Remove_file_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

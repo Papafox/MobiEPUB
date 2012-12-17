@@ -1,0 +1,42 @@
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\bin\Debug\MobiEPUB.exe
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\bin\Debug\MobiEPUB.pdb
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\MobiEPUB.Properties.Resources.resources
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\MobiEPUB.exe
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\MobiEPUB.pdb
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\MobiEPUB.AboutBox.resources
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\bin\Debug\MobiEPUB.exe.config
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\MobiEPUB.Settings.resources
+C:\Users\Matthew\AppData\Local\Temporary Projects\MobiEPUB\obj\x86\Debug\MobiEPUB.MainForm.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\MobiEPUB.exe.config
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.exe
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.pdb
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\MobiEPUB.exe
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\MobiEPUB.pdb
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.AboutBox.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.MainForm.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.Properties.Resources.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.SettingsForm.resources
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.dll
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.pdb
+C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.xml
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Debug\MobiEPUB.exe.config
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Debug\MobiEPUB.exe
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Debug\MobiEPUB.pdb
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.dll
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.pdb
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Debug\Ionic.Zip.xml
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.AboutBox.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.MainForm.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.Properties.Resources.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.SettingsForm.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.exe
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Debug\MobiEPUB.pdb

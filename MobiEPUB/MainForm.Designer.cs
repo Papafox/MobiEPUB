@@ -77,10 +77,20 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutMobiEPUBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.newButton = new System.Windows.Forms.ToolStripButton();
+            this.openButton = new System.Windows.Forms.ToolStripButton();
+            this.importButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cutButton = new System.Windows.Forms.ToolStripButton();
+            this.copyButton = new System.Windows.Forms.ToolStripButton();
+            this.pasteButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.buildButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewThumbsButton = new System.Windows.Forms.ToolStripButton();
+            this.viewDeatilsButton = new System.Windows.Forms.ToolStripButton();
             this.projectPanel = new System.Windows.Forms.Panel();
             this.pubControlPanel = new System.Windows.Forms.Panel();
             this.pubCreateButton = new System.Windows.Forms.Button();
@@ -97,30 +107,10 @@
             this.pubFilenameText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.documentPanel = new System.Windows.Forms.Panel();
+            this.docControlPanel = new System.Windows.Forms.Panel();
             this.buildPanel = new System.Windows.Forms.Panel();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.docControlPanel = new System.Windows.Forms.TabControl();
-            this.docFilesTab = new System.Windows.Forms.TabPage();
-            this.docCoverTab = new System.Windows.Forms.TabPage();
-            this.docTocTab = new System.Windows.Forms.TabPage();
-            this.docMetaTab = new System.Windows.Forms.TabPage();
-            this.docGuideTab = new System.Windows.Forms.TabPage();
-            this.docToolStrip = new System.Windows.Forms.ToolStrip();
             this.docFileTablePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.docAddFileButton = new System.Windows.Forms.ToolStripButton();
-            this.docDelFileButton = new System.Windows.Forms.ToolStripButton();
-            this.docUpFileButton = new System.Windows.Forms.ToolStripButton();
-            this.docDownFileButton = new System.Windows.Forms.ToolStripButton();
-            this.newButton = new System.Windows.Forms.ToolStripButton();
-            this.openButton = new System.Windows.Forms.ToolStripButton();
-            this.importButton = new System.Windows.Forms.ToolStripButton();
-            this.cutButton = new System.Windows.Forms.ToolStripButton();
-            this.copyButton = new System.Windows.Forms.ToolStripButton();
-            this.pasteButton = new System.Windows.Forms.ToolStripButton();
-            this.buildButton = new System.Windows.Forms.ToolStripButton();
-            this.settingsButton = new System.Windows.Forms.ToolStripButton();
-            this.viewThumbsButton = new System.Windows.Forms.ToolStripButton();
-            this.viewDeatilsButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -129,8 +119,6 @@
             this.groupBox1.SuspendLayout();
             this.documentPanel.SuspendLayout();
             this.docControlPanel.SuspendLayout();
-            this.docFilesTab.SuspendLayout();
-            this.docToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -521,25 +509,124 @@
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
             // 
+            // newButton
+            // 
+            this.newButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.newButton.Image = global::MobiEPUB.Properties.Resources.Book_icon;
+            this.newButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newButton.Name = "newButton";
+            this.newButton.Size = new System.Drawing.Size(32, 32);
+            this.newButton.Text = "New e-Book Project";
+            this.newButton.Click += new System.EventHandler(this.newButton_Click);
+            // 
+            // openButton
+            // 
+            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openButton.Image = global::MobiEPUB.Properties.Resources.Documents_icon;
+            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(32, 32);
+            this.openButton.Text = "Open e-Book Project";
+            this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            // 
+            // importButton
+            // 
+            this.importButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.importButton.Image = global::MobiEPUB.Properties.Resources.file_import_icon;
+            this.importButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.importButton.Name = "importButton";
+            this.importButton.Size = new System.Drawing.Size(32, 32);
+            this.importButton.Text = "Import Existing e-Book";
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 35);
+            // 
+            // cutButton
+            // 
+            this.cutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cutButton.Enabled = false;
+            this.cutButton.Image = global::MobiEPUB.Properties.Resources.Cut_icon;
+            this.cutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cutButton.Name = "cutButton";
+            this.cutButton.Size = new System.Drawing.Size(32, 32);
+            this.cutButton.Text = "Cut";
+            // 
+            // copyButton
+            // 
+            this.copyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copyButton.Enabled = false;
+            this.copyButton.Image = global::MobiEPUB.Properties.Resources.Copy_icon;
+            this.copyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(32, 32);
+            this.copyButton.Text = "Copy";
+            // 
+            // pasteButton
+            // 
+            this.pasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pasteButton.Enabled = false;
+            this.pasteButton.Image = global::MobiEPUB.Properties.Resources.Paste_icon;
+            this.pasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pasteButton.Name = "pasteButton";
+            this.pasteButton.Size = new System.Drawing.Size(32, 32);
+            this.pasteButton.Text = "Paste";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 35);
             // 
+            // buildButton
+            // 
+            this.buildButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buildButton.Enabled = false;
+            this.buildButton.Image = global::MobiEPUB.Properties.Resources.Build_icon;
+            this.buildButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buildButton.Name = "buildButton";
+            this.buildButton.Size = new System.Drawing.Size(32, 32);
+            this.buildButton.Text = "Build project";
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 35);
             // 
+            // settingsButton
+            // 
+            this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.settingsButton.Image = global::MobiEPUB.Properties.Resources.Settings_icon;
+            this.settingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(32, 32);
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 35);
+            // 
+            // viewThumbsButton
+            // 
+            this.viewThumbsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.viewThumbsButton.Enabled = false;
+            this.viewThumbsButton.Image = global::MobiEPUB.Properties.Resources.View_Thumbs_icon;
+            this.viewThumbsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.viewThumbsButton.Name = "viewThumbsButton";
+            this.viewThumbsButton.Size = new System.Drawing.Size(32, 32);
+            this.viewThumbsButton.Text = "View Thumbnails";
+            // 
+            // viewDeatilsButton
+            // 
+            this.viewDeatilsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.viewDeatilsButton.Enabled = false;
+            this.viewDeatilsButton.Image = global::MobiEPUB.Properties.Resources.View_Detail_icon;
+            this.viewDeatilsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.viewDeatilsButton.Name = "viewDeatilsButton";
+            this.viewDeatilsButton.Size = new System.Drawing.Size(32, 32);
+            this.viewDeatilsButton.Text = "View Details";
             // 
             // projectPanel
             // 
@@ -565,7 +652,7 @@
             this.pubControlPanel.Controls.Add(this.label2);
             this.pubControlPanel.Controls.Add(this.pubFilenameText);
             this.pubControlPanel.Controls.Add(this.label1);
-            this.pubControlPanel.Location = new System.Drawing.Point(95, 59);
+            this.pubControlPanel.Location = new System.Drawing.Point(92, 3);
             this.pubControlPanel.Name = "pubControlPanel";
             this.pubControlPanel.Size = new System.Drawing.Size(569, 341);
             this.pubControlPanel.TabIndex = 0;
@@ -701,6 +788,14 @@
             this.documentPanel.TabIndex = 0;
             this.documentPanel.SizeChanged += new System.EventHandler(this.projectPanel_SizeChanged);
             // 
+            // docControlPanel
+            // 
+            this.docControlPanel.Controls.Add(this.docFileTablePanel);
+            this.docControlPanel.Location = new System.Drawing.Point(101, 59);
+            this.docControlPanel.Name = "docControlPanel";
+            this.docControlPanel.Size = new System.Drawing.Size(560, 344);
+            this.docControlPanel.TabIndex = 0;
+            // 
             // buildPanel
             // 
             this.buildPanel.BackColor = System.Drawing.Color.RoyalBlue;
@@ -710,241 +805,25 @@
             this.buildPanel.Size = new System.Drawing.Size(735, 403);
             this.buildPanel.TabIndex = 0;
             // 
-            // docControlPanel
-            // 
-            this.docControlPanel.Controls.Add(this.docFilesTab);
-            this.docControlPanel.Controls.Add(this.docCoverTab);
-            this.docControlPanel.Controls.Add(this.docTocTab);
-            this.docControlPanel.Controls.Add(this.docMetaTab);
-            this.docControlPanel.Controls.Add(this.docGuideTab);
-            this.docControlPanel.Location = new System.Drawing.Point(50, 0);
-            this.docControlPanel.Name = "docControlPanel";
-            this.docControlPanel.SelectedIndex = 0;
-            this.docControlPanel.Size = new System.Drawing.Size(637, 344);
-            this.docControlPanel.TabIndex = 0;
-            // 
-            // docFilesTab
-            // 
-            this.docFilesTab.Controls.Add(this.docFileTablePanel);
-            this.docFilesTab.Controls.Add(this.docToolStrip);
-            this.docFilesTab.Location = new System.Drawing.Point(4, 22);
-            this.docFilesTab.Name = "docFilesTab";
-            this.docFilesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.docFilesTab.Size = new System.Drawing.Size(629, 318);
-            this.docFilesTab.TabIndex = 0;
-            this.docFilesTab.Text = "Files";
-            this.docFilesTab.UseVisualStyleBackColor = true;
-            // 
-            // docCoverTab
-            // 
-            this.docCoverTab.Location = new System.Drawing.Point(4, 22);
-            this.docCoverTab.Name = "docCoverTab";
-            this.docCoverTab.Padding = new System.Windows.Forms.Padding(3);
-            this.docCoverTab.Size = new System.Drawing.Size(629, 318);
-            this.docCoverTab.TabIndex = 1;
-            this.docCoverTab.Text = "Cover Image";
-            this.docCoverTab.UseVisualStyleBackColor = true;
-            // 
-            // docTocTab
-            // 
-            this.docTocTab.Location = new System.Drawing.Point(4, 22);
-            this.docTocTab.Name = "docTocTab";
-            this.docTocTab.Size = new System.Drawing.Size(629, 318);
-            this.docTocTab.TabIndex = 2;
-            this.docTocTab.Text = "Table of Contents";
-            this.docTocTab.UseVisualStyleBackColor = true;
-            // 
-            // docMetaTab
-            // 
-            this.docMetaTab.Location = new System.Drawing.Point(4, 22);
-            this.docMetaTab.Name = "docMetaTab";
-            this.docMetaTab.Size = new System.Drawing.Size(629, 318);
-            this.docMetaTab.TabIndex = 3;
-            this.docMetaTab.Text = "Metadata";
-            this.docMetaTab.UseVisualStyleBackColor = true;
-            // 
-            // docGuideTab
-            // 
-            this.docGuideTab.Location = new System.Drawing.Point(4, 22);
-            this.docGuideTab.Name = "docGuideTab";
-            this.docGuideTab.Size = new System.Drawing.Size(629, 318);
-            this.docGuideTab.TabIndex = 4;
-            this.docGuideTab.Text = "Guide";
-            this.docGuideTab.UseVisualStyleBackColor = true;
-            // 
-            // docToolStrip
-            // 
-            this.docToolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.docToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.docAddFileButton,
-            this.docDelFileButton,
-            this.docUpFileButton,
-            this.docDownFileButton});
-            this.docToolStrip.Location = new System.Drawing.Point(3, 3);
-            this.docToolStrip.Name = "docToolStrip";
-            this.docToolStrip.Size = new System.Drawing.Size(623, 31);
-            this.docToolStrip.TabIndex = 0;
-            this.docToolStrip.Text = "toolStrip1";
-            // 
             // docFileTablePanel
             // 
             this.docFileTablePanel.AutoScroll = true;
             this.docFileTablePanel.ColumnCount = 3;
-            this.docFileTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.docFileTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.docFileTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.docFileTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.docFileTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.docFileTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.docFileTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.docFileTablePanel.Location = new System.Drawing.Point(3, 34);
+            this.docFileTablePanel.Location = new System.Drawing.Point(0, 0);
             this.docFileTablePanel.Name = "docFileTablePanel";
             this.docFileTablePanel.RowCount = 2;
-            this.docFileTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.docFileTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.docFileTablePanel.Size = new System.Drawing.Size(623, 281);
-            this.docFileTablePanel.TabIndex = 1;
-            // 
-            // docAddFileButton
-            // 
-            this.docAddFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.docAddFileButton.Image = global::MobiEPUB.Properties.Resources.Add_file_icon;
-            this.docAddFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.docAddFileButton.Name = "docAddFileButton";
-            this.docAddFileButton.Size = new System.Drawing.Size(28, 28);
-            this.docAddFileButton.Text = "Add";
-            this.docAddFileButton.ToolTipText = "Add File to document";
-            // 
-            // docDelFileButton
-            // 
-            this.docDelFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.docDelFileButton.Enabled = false;
-            this.docDelFileButton.Image = global::MobiEPUB.Properties.Resources.Remove_file_icon;
-            this.docDelFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.docDelFileButton.Name = "docDelFileButton";
-            this.docDelFileButton.Size = new System.Drawing.Size(28, 28);
-            this.docDelFileButton.Text = "Remove file from project";
-            // 
-            // docUpFileButton
-            // 
-            this.docUpFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.docUpFileButton.Enabled = false;
-            this.docUpFileButton.Image = global::MobiEPUB.Properties.Resources.Arrow_up_icon;
-            this.docUpFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.docUpFileButton.Name = "docUpFileButton";
-            this.docUpFileButton.Size = new System.Drawing.Size(28, 28);
-            this.docUpFileButton.Text = "Move file up";
-            // 
-            // docDownFileButton
-            // 
-            this.docDownFileButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.docDownFileButton.Enabled = false;
-            this.docDownFileButton.Image = global::MobiEPUB.Properties.Resources.Arrow_down_icon;
-            this.docDownFileButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.docDownFileButton.Name = "docDownFileButton";
-            this.docDownFileButton.Size = new System.Drawing.Size(28, 28);
-            this.docDownFileButton.Text = "Move file down";
-            // 
-            // newButton
-            // 
-            this.newButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newButton.Image = global::MobiEPUB.Properties.Resources.Book_icon;
-            this.newButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newButton.Name = "newButton";
-            this.newButton.Size = new System.Drawing.Size(32, 32);
-            this.newButton.Text = "New e-Book Project";
-            this.newButton.Click += new System.EventHandler(this.newButton_Click);
-            // 
-            // openButton
-            // 
-            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openButton.Image = global::MobiEPUB.Properties.Resources.Documents_icon;
-            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(32, 32);
-            this.openButton.Text = "Open e-Book Project";
-            this.openButton.Click += new System.EventHandler(this.openButton_Click);
-            // 
-            // importButton
-            // 
-            this.importButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.importButton.Image = global::MobiEPUB.Properties.Resources.file_import_icon;
-            this.importButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.importButton.Name = "importButton";
-            this.importButton.Size = new System.Drawing.Size(32, 32);
-            this.importButton.Text = "Import Existing e-Book";
-            // 
-            // cutButton
-            // 
-            this.cutButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cutButton.Enabled = false;
-            this.cutButton.Image = global::MobiEPUB.Properties.Resources.Cut_icon;
-            this.cutButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutButton.Name = "cutButton";
-            this.cutButton.Size = new System.Drawing.Size(32, 32);
-            this.cutButton.Text = "Cut";
-            // 
-            // copyButton
-            // 
-            this.copyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyButton.Enabled = false;
-            this.copyButton.Image = global::MobiEPUB.Properties.Resources.Copy_icon;
-            this.copyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyButton.Name = "copyButton";
-            this.copyButton.Size = new System.Drawing.Size(32, 32);
-            this.copyButton.Text = "Copy";
-            // 
-            // pasteButton
-            // 
-            this.pasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pasteButton.Enabled = false;
-            this.pasteButton.Image = global::MobiEPUB.Properties.Resources.Paste_icon;
-            this.pasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteButton.Name = "pasteButton";
-            this.pasteButton.Size = new System.Drawing.Size(32, 32);
-            this.pasteButton.Text = "Paste";
-            // 
-            // buildButton
-            // 
-            this.buildButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buildButton.Enabled = false;
-            this.buildButton.Image = global::MobiEPUB.Properties.Resources.Build_icon;
-            this.buildButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buildButton.Name = "buildButton";
-            this.buildButton.Size = new System.Drawing.Size(32, 32);
-            this.buildButton.Text = "Build project";
-            // 
-            // settingsButton
-            // 
-            this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.settingsButton.Image = global::MobiEPUB.Properties.Resources.Settings_icon;
-            this.settingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(32, 32);
-            this.settingsButton.Text = "Settings";
-            this.settingsButton.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // viewThumbsButton
-            // 
-            this.viewThumbsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.viewThumbsButton.Enabled = false;
-            this.viewThumbsButton.Image = global::MobiEPUB.Properties.Resources.View_Thumbs_icon;
-            this.viewThumbsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.viewThumbsButton.Name = "viewThumbsButton";
-            this.viewThumbsButton.Size = new System.Drawing.Size(32, 32);
-            this.viewThumbsButton.Text = "View Thumbnails";
-            // 
-            // viewDeatilsButton
-            // 
-            this.viewDeatilsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.viewDeatilsButton.Enabled = false;
-            this.viewDeatilsButton.Image = global::MobiEPUB.Properties.Resources.View_Detail_icon;
-            this.viewDeatilsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.viewDeatilsButton.Name = "viewDeatilsButton";
-            this.viewDeatilsButton.Size = new System.Drawing.Size(32, 32);
-            this.viewDeatilsButton.Text = "View Details";
+            this.docFileTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.docFileTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.docFileTablePanel.Size = new System.Drawing.Size(560, 344);
+            this.docFileTablePanel.TabIndex = 0;
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "EPUB files|*.epub|PRC files|*.prc|All files|*.*";
-            this.openFileDialog.Title = "Select e-book to load";
+            this.openFileDialog.Filter = "EPUB Files|*.epub|PRC Files|*.prc|All Files|*.*";
             // 
             // MainForm
             // 
@@ -972,10 +851,6 @@
             this.groupBox1.PerformLayout();
             this.documentPanel.ResumeLayout(false);
             this.docControlPanel.ResumeLayout(false);
-            this.docFilesTab.ResumeLayout(false);
-            this.docFilesTab.PerformLayout();
-            this.docToolStrip.ResumeLayout(false);
-            this.docToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1064,18 +939,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox pubFilenameText;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl docControlPanel;
-        private System.Windows.Forms.TabPage docFilesTab;
-        private System.Windows.Forms.TabPage docCoverTab;
-        private System.Windows.Forms.TabPage docTocTab;
-        private System.Windows.Forms.TabPage docMetaTab;
-        private System.Windows.Forms.TabPage docGuideTab;
-        private System.Windows.Forms.ToolStrip docToolStrip;
-        private System.Windows.Forms.ToolStripButton docAddFileButton;
+        private System.Windows.Forms.Panel docControlPanel;
         private System.Windows.Forms.TableLayoutPanel docFileTablePanel;
-        private System.Windows.Forms.ToolStripButton docDelFileButton;
-        private System.Windows.Forms.ToolStripButton docUpFileButton;
-        private System.Windows.Forms.ToolStripButton docDownFileButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
