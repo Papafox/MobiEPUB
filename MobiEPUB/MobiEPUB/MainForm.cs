@@ -31,6 +31,8 @@ namespace MobiEPUB
 {
     public partial class MainForm : Form
     {
+        private const float ROWSIZE = 28.0F;
+
         private Settings m_Settings;
         private Ebook ebook;
 
@@ -112,10 +114,16 @@ namespace MobiEPUB
 
         private void documentPanel_Load(object sender, EventArgs e)
         {
-            int col0Width =  (int)docFileTablePanel.ColumnStyles[0].Width;
-            int col1Width =  (int)docFileTablePanel.ColumnStyles[1].Width;
-            int textWidth = docFileTablePanel.Width - (col0Width + col1Width);
-            docFileTablePanel.RowCount = 0;
+
+            int visibleRows = docFileTablePanel.Height / (int)ROWSIZE;
+            docFileTablePanel.VerticalScroll.LargeChange = (visibleRows - 2) * (int)ROWSIZE;
+            docFileTablePanel.VerticalScroll.SmallChange = (int)ROWSIZE;
+            docFileTablePanel.VerticalScroll.Value = 0;
+
+            int col0Width = (int)docFileTablePanel.ColumnStyles[0].Width;
+            int col1Width = (int)docFileTablePanel.ColumnStyles[1].Width;
+            int textWidth = docFileTablePanel.Width - (col0Width + col1Width) - 20;
+            docFileTablePanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
 
             loadProgressBar.Visible = true;
             loadProgressBar.Minimum = 0;
@@ -123,23 +131,38 @@ namespace MobiEPUB
 
             docFileTablePanel.SuspendLayout();
             documentPanel_SizeChanged(sender, e);
-            docFileTablePanel.RowCount = 0;
+            RemoveRows();
+
             foreach (DocumentFile doc in ebook.Documents)
             {
                 int row = AddTableRow();
+                docFileTablePanel.VerticalScroll.Enabled = (row > visibleRows);
 
                 PictureBox pic = new PictureBox();
+                pic.Size = new Size(30, 30);
+                pic.Padding = new Padding(2);
                 pic.Image = Properties.Resources.ebook_icon;
+                using (Graphics g = pic.CreateGraphics())
+                {
+                    g.DrawImage(Properties.Resources.ebook_icon, 0, 0);
+                }
                 pic.Anchor = AnchorStyles.Left;
+                pic.Click += DocFileTableRowSelect;
                 docFileTablePanel.Controls.Add(pic, 0, row);
+                pic.BringToFront();
 
                 Label l = new Label();
                 l.Text = doc.ItemID;
                 l.Anchor = AnchorStyles.Left;
+                l.Padding = new Padding(0, 4, 0, 0);
                 l.TextAlign = ContentAlignment.MiddleLeft;
+                l.Click += DocFileTableRowSelect;
                 docFileTablePanel.Controls.Add(l, 1, row);
 
-                TextBox text = new TextBox();
+                // TextBox text = new TextBox();
+                Label text = new Label();
+                text.AutoSize = false;
+                text.Padding = new Padding(0, 4, 0, 0);
                 text.Width = textWidth;
                 text.Text = doc.Filename;
                 text.Anchor = AnchorStyles.Left;
@@ -147,6 +170,8 @@ namespace MobiEPUB
 
                 loadProgressBar.Value = row;
             }
+
+            docFileTablePanel.VerticalScroll.Maximum = docFileTablePanel.RowCount * (int)ROWSIZE;
             docFileTablePanel.ResumeLayout();
             docFileTablePanel.PerformLayout();
             loadProgressBar.Visible = false;
@@ -155,9 +180,33 @@ namespace MobiEPUB
         private int AddTableRow()
         {
             int result = docFileTablePanel.RowCount++;
-            RowStyle style = new RowStyle(SizeType.Absolute, 20.0F);
+            RowStyle style = new RowStyle(SizeType.Absolute, ROWSIZE);
             docFileTablePanel.RowStyles.Add(style);
             return result;
+        }
+
+        // Clean out the table panel of any existing data
+        private void RemoveRows()
+        {
+            // Remove all existing controls
+            docFileTablePanel.Controls.Clear();
+
+            // Delete each of the existing row. Note doesn't remove controls.
+            for (int row = docFileTablePanel.RowCount - 1; row >= 0; row--)
+            {
+                docFileTablePanel.RowStyles.RemoveAt(row);
+            }
+
+            // Make sure rowcount also cleared.  Deleting rowstyle doesn't do this.
+            docFileTablePanel.RowCount = 0;
+        }
+
+        private void DocFileTableRowSelect(Object sender, EventArgs e)
+        {
+            int row = docFileTablePanel.GetRow((Control)sender);
+            Control control = (Control)sender;
+            control.Select();
+
         }
 
         private void projectPanel_SizeChanged(object sender, EventArgs e)
@@ -169,9 +218,13 @@ namespace MobiEPUB
 
         private void documentPanel_SizeChanged(object sender, EventArgs e)
         {
+            documentPanel.SuspendLayout();
             docControlPanel.Top = 0;
             docControlPanel.Left = (documentPanel.Width - docControlPanel.Width) / 2;
             docControlPanel.Height = documentPanel.Height;
+            fileTabMainPanel.Height = docFilesTab.Height - fileTabTopPanel.Height - 4;
+            documentPanel.ResumeLayout();
+            documentPanel.PerformLayout();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

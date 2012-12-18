@@ -28,3 +28,15 @@ C:\Users\Matthew\documents\visual studio 2010\Projects\MobiEPUB\MobiEPUB\bin\Rel
 C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Release\MobiEPUB.exe.config
 C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.exe
 C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.pdb
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Release\MobiEPUB.exe
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Release\MobiEPUB.pdb
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Release\Ionic.Zip.dll
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Release\Ionic.Zip.pdb
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\bin\Release\Ionic.Zip.xml
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.AboutBox.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.MainForm.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.Properties.Resources.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\MobiEPUB.SettingsForm.resources
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\Matthew\Documents\Visual Studio 2010\Projects\MobiEPUB\MobiEPUB\MobiEPUB\obj\x86\Release\GenerateResource.write.1.tlog

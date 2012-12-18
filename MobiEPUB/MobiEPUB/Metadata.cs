@@ -28,6 +28,9 @@ namespace MobiEPUB
         private String m_Author;
         private String m_Language;
         private String m_Subject;
+        private String m_Publisher;
+        private String m_uniqueId;
+        private String m_uniqueIdName;
 
         private ArrayList m_FileList;
 
@@ -40,6 +43,9 @@ namespace MobiEPUB
         public String Author { get { return m_Author; } set { m_Author = value; } }
         public String Language { get { return m_Language; } set { m_Language = value; } }
         public String Subject { get { return m_Subject; } set { m_Subject = value; } }
+        public String Publisher { get { return m_Publisher; } set { m_Publisher = value; } }
+        public String UniqueId { get { return m_uniqueId; } set {m_uniqueId = value; } }
+        public String UniqueIdName { get { return m_uniqueIdName; } set { m_uniqueIdName = value; } }
 
         public DocumentFile[] Files
         {

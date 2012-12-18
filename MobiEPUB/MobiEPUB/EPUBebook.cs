@@ -109,11 +109,11 @@
 //    		 <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
 //                    xmlns:opf="http://www.idpf.org/2007/opf">
 //    				<dc:title>Alice in Wonderland</dc:title>
-//               		<dc:language>en</dc:language>
-//               		<dc:identifier id="BookId" opf:scheme="ISBN">
+//             		<dc:language>en</dc:language>
+//             		<dc:identifier id="BookId" opf:scheme="ISBN">
 //                		123456789X
 //    				</dc:identifier>
-//               		<dc:creator opf:role="aut">Lewis Carroll</dc:creator>
+//             		<dc:creator opf:role="aut">Lewis Carroll</dc:creator>
 //    		 </metadata>
 //         	 <manifest>
 //             		<item id="intro" href="introduction.html" media-type="application/xhtml+xml" />
@@ -511,7 +511,16 @@ namespace MobiEPUB
         //   </package>
         private void LoadOPF(XmlDocument opf)
         {
+            // Extract the unique-identifier attribute from <package>
+            XmlNamespaceManager opfnsManager = new XmlNamespaceManager(opf.NameTable);
+            opfnsManager.AddNamespace("def", "http://www.idpf.org/2007/opf");
+            XmlNode package = opf.SelectSingleNode("/def:package", opfnsManager);
+            XmlAttribute unique = package.Attributes["unique-identifier"];
+            if (unique != null)
+                uniqueId = unique.Value;
+
             // Load the metadata
+            LoadMetadata(opf);
 
             // Load the manifest
             LoadManifest(opf);
@@ -521,6 +530,43 @@ namespace MobiEPUB
             // Load the guide
         }
 
+
+        // Load the metadata and extract title/author etc
+        // Use the UniqueID loaded from the <package> to extract the value
+        //    	<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
+        //                  xmlns:opf="http://www.idpf.org/2007/opf">
+        // 			<dc:title>Alice in Wonderland</dc:title>
+        //      	<dc:language>en</dc:language>
+        //      	<dc:identifier id="BookId" opf:scheme="ISBN">123456789X</dc:identifier>
+        //         	<dc:creator opf:role="aut">Lewis Carroll</dc:creator>
+        //    	</metadata>
+        private void LoadMetadata(XmlDocument opf)
+        {
+            XmlNamespaceManager opfnsManager = new XmlNamespaceManager(opf.NameTable);
+            opfnsManager.AddNamespace("def", "http://www.idpf.org/2007/opf");
+            opfnsManager.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+            opfnsManager.AddNamespace("dcterms", "http://purl.org/dc/terms/");
+
+            XmlNode metadata = opf.SelectSingleNode("/def:package/def:metadata", opfnsManager);
+            XmlNodeList terms = metadata.SelectNodes("dc:*", opfnsManager);
+            foreach (XmlNode item in terms)
+            {
+                if (item.Name.Equals("dc:title"))
+                    _meta.Title = item.InnerText;
+                if (item.Name.Equals("dc:language"))
+                    _meta.Language = item.InnerText;
+                if (item.Name.Equals("dc:publisher"))
+                    _meta.Publisher = item.InnerText;
+
+                XmlAttribute id = item.Attributes["id"];
+                if (id != null && id.Value.Equals(uniqueId))
+                {
+                    _meta.UniqueIdName = uniqueId;
+                    _meta.UniqueId = item.InnerText;
+                }
+
+            }
+        }
 
         // Load the manifest
         //       <manifest>
