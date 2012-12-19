@@ -537,19 +537,203 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using MobiEPUB.PRC;
+using System.Drawing;
 
 namespace MobiEPUB
 {
     class PRCebook : Ebook
     {
-        public PRCebook()
-            : base()
-        {
-        }
+        private PDBheader m_PDBheader;
+        private PRCheader m_PRCheader;
+        private MOBIheader m_MOBIheader;
+        private EXTHheader m_EXTHheader;
+        private PrcImages m_Images;
+
+        private byte[] m_Array;
+        private FileStream m_File;
+        private String m_Document;
+        private Header m_Rec0;
+
         public PRCebook(String fn)
             : base()
         {
-            _filename = fn;
+            Open(fn);
         }
+
+        public override void Open(string fn)
+        {
+            base.Open(fn);
+            LoadPRC(fn);
+            _meta.Title = m_MOBIheader.Fullname;
+            _meta.Author = m_EXTHheader.Author;
+            _meta.Language = m_EXTHheader.Language;
+            _meta.Subject = m_EXTHheader.Subject;
+            _meta.Publisher = m_EXTHheader.Publisher;
+        }
+
+        private void LoadPRC(string fn)
+        {
+            m_File = new FileStream(fn, FileMode.Open, FileAccess.Read);
+            m_Array = new Byte[m_File.Length];
+            m_File.Read(m_Array, 0, m_Array.Length);
+            Header m_Header = new Header(m_Array);
+            m_PDBheader = new PDBheader(m_Header);
+            byte[] prcRec = m_PDBheader.GetRecord(0);
+            m_Rec0 = new Header(prcRec);
+
+            m_PRCheader = new PRCheader(m_Rec0);
+            m_MOBIheader = new MOBIheader(m_Rec0);
+
+            // Does an EXTH header exist? Byte 126 bit 6 (0x40) 
+            bool m_EXTHexists = (((int)prcRec[126] & 0x40) == 0x00);
+
+            if (m_EXTHexists)
+            {
+                m_EXTHheader = new EXTHheader(m_Rec0);
+            }
+
+            // Images
+            m_Images = new PrcImages(m_Rec0, m_PDBheader);
+        }
+
+        private String GetDocument()
+        {
+            // Extract the document 
+            StringBuilder doc = new StringBuilder(m_PRCheader.TextLenth + 2);
+            Decompression decoder = null;
+            switch (m_PRCheader.Compression)
+            {
+                case PRCheader.CompressionMode.None:
+                    decoder = new Decompression();
+                    break;
+                case PRCheader.CompressionMode.PalmDoc:
+                    decoder = new LZ77decompress();
+                    break;
+                case PRCheader.CompressionMode.Huffman:
+                    //decoder = new HuffmanDecompress(m_Rec0);
+                    break;
+                default:
+                    throw new Exception("Invalid compression");
+            }
+
+            for (int i = 1; i < m_MOBIheader.FirstImageRec; i++)
+            {
+                byte[] bo = GetRecord(i);
+                doc.Append(decoder.Decompress(bo));
+            }
+            return doc.ToString();
+        }
+        //------------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------------
+
+        public PRCheader.CompressionMode Compression { get { return m_PRCheader.Compression; } }
+
+        public int TextLenth { get { return m_PRCheader.TextLenth; } }
+
+        public int PrcRecordCnt { get { return m_PRCheader.RecordCnt; } }
+
+        public int MaxRecLenth { get { return m_PRCheader.MaxRecLenth; } }
+
+        public PRCheader.EncryptionMode Encryption { get { return m_PRCheader.Encryption; } }
+
+        //------------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------------
+
+        public String Title { get { return m_PDBheader.Filename; } }
+
+        public int Version { get { return m_PDBheader.Version; } }
+
+        public DateTime Created { get { return m_PDBheader.CreationDate; } }
+
+        public DateTime Modified { get { return m_PDBheader.ModificationDate; } }
+
+        public String Type { get { return m_PDBheader.Type; } }
+
+        public String Creator { get { return m_PDBheader.Creator; } }
+
+        public int PdbRecordCnt { get { return m_PDBheader.RecordCnt; } }
+
+        //------------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------------
+
+        //public String MOBI { get { return m_MOBI; } }
+
+        public int MOBItype { get { return m_MOBIheader.MOBItype; } }
+
+        public int PrcEncoding { get { return m_MOBIheader.Encoding; } }
+
+        public int PrcVersion { get { return m_MOBIheader.Version; } }
+
+        public String Fullname { get { return m_MOBIheader.Fullname; } }
+
+        public bool ImagesExist { get { return m_MOBIheader.ImagesExist; } }
+
+        //------------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------------
+
+        public bool EXTHexists { get { return (m_EXTHheader != null); } }
+
+        //------------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------------
+
+        public Image[] Images { get { return m_Images.Images; } }
+
+        public String Document
+        {
+            get
+            {
+                if (m_Document == null) m_Document = GetDocument();
+                return m_Document;
+            }
+        }
+
+        //------------------------------------------------------------------------
+        //
+        //------------------------------------------------------------------------
+
+        private int Read(byte[] array, int offset)
+        {
+            int result = ((offset + 32) < m_Array.Length) ? 32 : m_Array.Length - offset;
+            Array.Copy(m_Array, offset, array, 0, result);
+            return result;
+        }
+
+        public byte[] GetRecord(int recnum)
+        {
+            return m_PDBheader.GetRecord(recnum);
+        }
+
+        public String DecompressRecord(int recnum)
+        {
+            Decompression decoder = null;
+            switch (m_PRCheader.Compression)
+            {
+                case PRCheader.CompressionMode.None:
+                    decoder = new Decompression();
+                    break;
+                case PRCheader.CompressionMode.PalmDoc:
+                    decoder = new LZ77decompress();
+                    break;
+                case PRCheader.CompressionMode.Huffman:
+                    //decoder = new HuffmanDecompress(m_Rec0);
+                    break;
+                default:
+                    throw new Exception("Invalid compression");
+            }
+            Byte[] bo = GetRecord(recnum);
+            return decoder.Decompress(bo);
+        }
+
+        public int GetRecordOffset(int recnum)
+        {
+            return m_PDBheader.GetRecordOffset(recnum);
+        }
+
     }
 }

@@ -114,12 +114,6 @@ namespace MobiEPUB
 
         private void documentPanel_Load(object sender, EventArgs e)
         {
-
-            int visibleRows = docFileTablePanel.Height / (int)ROWSIZE;
-            docFileTablePanel.VerticalScroll.LargeChange = (visibleRows - 2) * (int)ROWSIZE;
-            docFileTablePanel.VerticalScroll.SmallChange = (int)ROWSIZE;
-            docFileTablePanel.VerticalScroll.Value = 0;
-
             int col0Width = (int)docFileTablePanel.ColumnStyles[0].Width;
             int col1Width = (int)docFileTablePanel.ColumnStyles[1].Width;
             int textWidth = docFileTablePanel.Width - (col0Width + col1Width) - 20;
@@ -136,7 +130,7 @@ namespace MobiEPUB
             foreach (DocumentFile doc in ebook.Documents)
             {
                 int row = AddTableRow();
-                docFileTablePanel.VerticalScroll.Enabled = (row > visibleRows);
+                docFileTablePanel.VerticalScroll.Enabled = (row > (docFileTablePanel.Height / (int)ROWSIZE));
 
                 PictureBox pic = new PictureBox();
                 pic.Size = new Size(30, 30);
@@ -223,6 +217,11 @@ namespace MobiEPUB
             docControlPanel.Left = (documentPanel.Width - docControlPanel.Width) / 2;
             docControlPanel.Height = documentPanel.Height;
             fileTabMainPanel.Height = docFilesTab.Height - fileTabTopPanel.Height - 4;
+
+            docFileTablePanel.VerticalScroll.LargeChange = (docFileTablePanel.Height / (int)ROWSIZE - 2) * (int)ROWSIZE;
+            docFileTablePanel.VerticalScroll.SmallChange = (int)ROWSIZE;
+            docFileTablePanel.VerticalScroll.Value = 0;
+            
             documentPanel.ResumeLayout();
             documentPanel.PerformLayout();
         }

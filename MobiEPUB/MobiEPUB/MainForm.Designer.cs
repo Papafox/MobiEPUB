@@ -111,12 +111,11 @@
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.documentPanel = new System.Windows.Forms.Panel();
-            this.buildPanel = new System.Windows.Forms.Panel();
-            this.topPanel = new System.Windows.Forms.Panel();
-            this.mainPanel = new System.Windows.Forms.Panel();
             this.docControlPanel = new System.Windows.Forms.TabControl();
             this.docFilesTab = new System.Windows.Forms.TabPage();
             this.fileTabTopPanel = new System.Windows.Forms.Panel();
+            this.docFileFnHdrLabel = new System.Windows.Forms.Label();
+            this.docFileItemHdrLabel = new System.Windows.Forms.Label();
             this.docToolStrip = new System.Windows.Forms.ToolStrip();
             this.docAddFileButton = new System.Windows.Forms.ToolStripButton();
             this.docDelFileButton = new System.Windows.Forms.ToolStripButton();
@@ -128,21 +127,22 @@
             this.docTocTab = new System.Windows.Forms.TabPage();
             this.docMetaTab = new System.Windows.Forms.TabPage();
             this.docGuideTab = new System.Windows.Forms.TabPage();
-            this.docFileItemHdrLabel = new System.Windows.Forms.Label();
-            this.docFileFnHdrLabel = new System.Windows.Forms.Label();
+            this.buildPanel = new System.Windows.Forms.Panel();
+            this.topPanel = new System.Windows.Forms.Panel();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.projectPanel.SuspendLayout();
             this.pubControlPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.documentPanel.SuspendLayout();
-            this.topPanel.SuspendLayout();
-            this.mainPanel.SuspendLayout();
             this.docControlPanel.SuspendLayout();
             this.docFilesTab.SuspendLayout();
             this.fileTabTopPanel.SuspendLayout();
             this.docToolStrip.SuspendLayout();
             this.fileTabMainPanel.SuspendLayout();
+            this.topPanel.SuspendLayout();
+            this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -834,36 +834,6 @@
             this.documentPanel.TabIndex = 3;
             this.documentPanel.SizeChanged += new System.EventHandler(this.documentPanel_SizeChanged);
             // 
-            // buildPanel
-            // 
-            this.buildPanel.BackColor = System.Drawing.Color.CadetBlue;
-            this.buildPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buildPanel.Location = new System.Drawing.Point(0, 0);
-            this.buildPanel.Name = "buildPanel";
-            this.buildPanel.Size = new System.Drawing.Size(735, 334);
-            this.buildPanel.TabIndex = 4;
-            // 
-            // topPanel
-            // 
-            this.topPanel.Controls.Add(this.toolStrip);
-            this.topPanel.Controls.Add(this.menuStrip);
-            this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topPanel.Location = new System.Drawing.Point(0, 0);
-            this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(735, 69);
-            this.topPanel.TabIndex = 5;
-            // 
-            // mainPanel
-            // 
-            this.mainPanel.Controls.Add(this.documentPanel);
-            this.mainPanel.Controls.Add(this.projectPanel);
-            this.mainPanel.Controls.Add(this.buildPanel);
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(0, 69);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(735, 334);
-            this.mainPanel.TabIndex = 6;
-            // 
             // docControlPanel
             // 
             this.docControlPanel.Controls.Add(this.docFilesTab);
@@ -901,6 +871,26 @@
             this.fileTabTopPanel.Name = "fileTabTopPanel";
             this.fileTabTopPanel.Size = new System.Drawing.Size(721, 52);
             this.fileTabTopPanel.TabIndex = 3;
+            // 
+            // docFileFnHdrLabel
+            // 
+            this.docFileFnHdrLabel.AutoSize = true;
+            this.docFileFnHdrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.docFileFnHdrLabel.Location = new System.Drawing.Point(144, 32);
+            this.docFileFnHdrLabel.Name = "docFileFnHdrLabel";
+            this.docFileFnHdrLabel.Size = new System.Drawing.Size(67, 15);
+            this.docFileFnHdrLabel.TabIndex = 3;
+            this.docFileFnHdrLabel.Text = "Filename";
+            // 
+            // docFileItemHdrLabel
+            // 
+            this.docFileItemHdrLabel.AutoSize = true;
+            this.docFileItemHdrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.docFileItemHdrLabel.Location = new System.Drawing.Point(47, 32);
+            this.docFileItemHdrLabel.Name = "docFileItemHdrLabel";
+            this.docFileItemHdrLabel.Size = new System.Drawing.Size(53, 15);
+            this.docFileItemHdrLabel.TabIndex = 2;
+            this.docFileItemHdrLabel.Text = "Item ID";
             // 
             // docToolStrip
             // 
@@ -987,7 +977,7 @@
             this.docCoverTab.Location = new System.Drawing.Point(4, 22);
             this.docCoverTab.Name = "docCoverTab";
             this.docCoverTab.Padding = new System.Windows.Forms.Padding(3);
-            this.docCoverTab.Size = new System.Drawing.Size(629, 305);
+            this.docCoverTab.Size = new System.Drawing.Size(727, 308);
             this.docCoverTab.TabIndex = 1;
             this.docCoverTab.Text = "Cover Image";
             this.docCoverTab.UseVisualStyleBackColor = true;
@@ -996,7 +986,7 @@
             // 
             this.docTocTab.Location = new System.Drawing.Point(4, 22);
             this.docTocTab.Name = "docTocTab";
-            this.docTocTab.Size = new System.Drawing.Size(629, 305);
+            this.docTocTab.Size = new System.Drawing.Size(727, 308);
             this.docTocTab.TabIndex = 2;
             this.docTocTab.Text = "Table of Contents";
             this.docTocTab.UseVisualStyleBackColor = true;
@@ -1005,7 +995,7 @@
             // 
             this.docMetaTab.Location = new System.Drawing.Point(4, 22);
             this.docMetaTab.Name = "docMetaTab";
-            this.docMetaTab.Size = new System.Drawing.Size(629, 305);
+            this.docMetaTab.Size = new System.Drawing.Size(727, 308);
             this.docMetaTab.TabIndex = 3;
             this.docMetaTab.Text = "Metadata";
             this.docMetaTab.UseVisualStyleBackColor = true;
@@ -1014,30 +1004,40 @@
             // 
             this.docGuideTab.Location = new System.Drawing.Point(4, 22);
             this.docGuideTab.Name = "docGuideTab";
-            this.docGuideTab.Size = new System.Drawing.Size(629, 305);
+            this.docGuideTab.Size = new System.Drawing.Size(727, 308);
             this.docGuideTab.TabIndex = 4;
             this.docGuideTab.Text = "Guide";
             this.docGuideTab.UseVisualStyleBackColor = true;
             // 
-            // docFileItemHdrLabel
+            // buildPanel
             // 
-            this.docFileItemHdrLabel.AutoSize = true;
-            this.docFileItemHdrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.docFileItemHdrLabel.Location = new System.Drawing.Point(47, 32);
-            this.docFileItemHdrLabel.Name = "docFileItemHdrLabel";
-            this.docFileItemHdrLabel.Size = new System.Drawing.Size(53, 15);
-            this.docFileItemHdrLabel.TabIndex = 2;
-            this.docFileItemHdrLabel.Text = "Item ID";
+            this.buildPanel.BackColor = System.Drawing.Color.CadetBlue;
+            this.buildPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buildPanel.Location = new System.Drawing.Point(0, 0);
+            this.buildPanel.Name = "buildPanel";
+            this.buildPanel.Size = new System.Drawing.Size(735, 334);
+            this.buildPanel.TabIndex = 4;
             // 
-            // docFileFnHdrLabel
+            // topPanel
             // 
-            this.docFileFnHdrLabel.AutoSize = true;
-            this.docFileFnHdrLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.docFileFnHdrLabel.Location = new System.Drawing.Point(144, 32);
-            this.docFileFnHdrLabel.Name = "docFileFnHdrLabel";
-            this.docFileFnHdrLabel.Size = new System.Drawing.Size(67, 15);
-            this.docFileFnHdrLabel.TabIndex = 3;
-            this.docFileFnHdrLabel.Text = "Filename";
+            this.topPanel.Controls.Add(this.toolStrip);
+            this.topPanel.Controls.Add(this.menuStrip);
+            this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topPanel.Location = new System.Drawing.Point(0, 0);
+            this.topPanel.Name = "topPanel";
+            this.topPanel.Size = new System.Drawing.Size(735, 69);
+            this.topPanel.TabIndex = 5;
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Controls.Add(this.documentPanel);
+            this.mainPanel.Controls.Add(this.projectPanel);
+            this.mainPanel.Controls.Add(this.buildPanel);
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.Location = new System.Drawing.Point(0, 69);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(735, 334);
+            this.mainPanel.TabIndex = 6;
             // 
             // MainForm
             // 
@@ -1061,9 +1061,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.documentPanel.ResumeLayout(false);
-            this.topPanel.ResumeLayout(false);
-            this.topPanel.PerformLayout();
-            this.mainPanel.ResumeLayout(false);
             this.docControlPanel.ResumeLayout(false);
             this.docFilesTab.ResumeLayout(false);
             this.fileTabTopPanel.ResumeLayout(false);
@@ -1071,6 +1068,9 @@
             this.docToolStrip.ResumeLayout(false);
             this.docToolStrip.PerformLayout();
             this.fileTabMainPanel.ResumeLayout(false);
+            this.topPanel.ResumeLayout(false);
+            this.topPanel.PerformLayout();
+            this.mainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

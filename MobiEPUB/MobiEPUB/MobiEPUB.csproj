@@ -67,6 +67,15 @@
     <Compile Include="MobiEPUB.cs" />
     <Compile Include="MobiEPUBexception.cs" />
     <Compile Include="PRCebook.cs" />
+    <Compile Include="PRC\Decompression.cs" />
+    <Compile Include="PRC\EXTHheader.cs" />
+    <Compile Include="PRC\Header.cs" />
+    <Compile Include="PRC\HuffmanDecompress.cs" />
+    <Compile Include="PRC\LZ77decompress.cs" />
+    <Compile Include="PRC\MOBIheader.cs" />
+    <Compile Include="PRC\PDBheader.cs" />
+    <Compile Include="PRC\PRCheader.cs" />
+    <Compile Include="PRC\PrcImages.cs" />
     <Compile Include="Properties\MobiEPUB.cs" />
     <Compile Include="Properties\MobiEPUB.Designer.cs">
       <AutoGen>True</AutoGen>
